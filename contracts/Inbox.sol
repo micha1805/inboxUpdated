@@ -5,7 +5,7 @@ pragma solidity ^0.8.9;
 contract Inbox{
 	string public message;
 
-	constructor(string initMessage) public {
+	constructor(string memory initMessage) public {
 		message = initMessage;
 	}
 
