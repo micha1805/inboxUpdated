@@ -2,7 +2,8 @@ const assert = require ('assert')
 const ganache = require('ganache-cli')
 const Web3 = require('web3')
 const web3 = new Web3(ganache.provider())// instance of Web3
-const {interface, bytecode } = require('../compile')
+// following os different :
+const {abi, evm } = require('../compile')
 
 const INITIAL_STRING = 'Hello'
 
@@ -14,8 +15,11 @@ beforeEach( async ()=>{
 	// get a list of accounts
 	accounts = await web3.eth.getAccounts()
 
-	inbox = await new web3.eth.Contract(JSON.parse(interface))
-	.deploy({data: bytecode, arguments: [INITIAL_STRING]})
+	// following syntax is different too :
+	inbox = await new web3.eth.Contract(abi)
+	.deploy({
+		data: evm.bytecode.object,
+		arguments: [INITIAL_STRING]})
 	.send({from: accounts[0], gas: '1000000'}) // 1_000_000
 
 })

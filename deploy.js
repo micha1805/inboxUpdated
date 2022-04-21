@@ -1,6 +1,7 @@
 const HDWalletProvider = require('@truffle/hdwallet-provider')
 const Web3 = require('web3')
-const {interface, bytecode} = require('./compile')
+
+const {abi, evm} = require('./compile')
 require('dotenv').config()
 
 
@@ -28,9 +29,9 @@ const deploy = async () => {
 	let contractObject
 	try{
 
-		contractObject = await new web3.eth.Contract(JSON.parse(interface))
-		.deploy({data: bytecode, arguments: ['Hello!']})
-		.send({gas : 1000000, from: accounts[2]})
+		contractObject = await new web3.eth.Contract(abi)
+		.deploy({data: evm.bytecode.object, arguments: ['Hello!']})
+		.send({gas : '1000000', from: accounts[2]})
 
 	}catch(e){
 		console.log(e)
